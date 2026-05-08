@@ -122,8 +122,8 @@
 
 ## 📮 联系方式
 
-- **作者**：{你的姓名}
-- **邮箱**：{你的邮箱}
-- **GitHub**：[@{你的GitHub用户名}](https://github.com/{你的GitHub用户名})
+- **作者**：陶惠灵
+- **邮箱**：thlthl2010@yeah.net
+- **GitHub**：[@taohuiling2010-bot](https://github.com/taohuiling2010-bot)
 
 如对项目有任何疑问或建议，欢迎通过 Issue 或邮件联系。
