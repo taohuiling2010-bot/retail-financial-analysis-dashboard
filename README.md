@@ -4,7 +4,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?logo=mysql&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-DAX-F2C811?logo=powerbi&logoColor=black)
-![Date](https://img.shields.io/badge/Period-2026.02--2026.03-blue)
+![Date](https://img.shields.io/badge/Period-2026.04--2026.05-blue)
 ![Role](https://img.shields.io/badge/Role-Independent%20Owner-success)
 
 ---
