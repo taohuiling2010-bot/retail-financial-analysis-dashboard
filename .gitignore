@@ -1,0 +1,23 @@
+# macOS 系统文件
+.DS_Store
+.DS_Store?
+._*
+
+# Windows 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 编辑器临时文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Power BI 临时文件（Power BI 编辑过程中生成的临时文件）
+*.tmp
+~$*
+
+# 个人笔记/草稿
+TODO.md
+notes.txt
