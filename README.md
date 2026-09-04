@@ -125,5 +125,6 @@
 - **作者**：陶惠灵
 - **邮箱**：thlthl2010@yeah.net
 - **GitHub**：[@taohuiling2010-bot](https://github.com/taohuiling2010-bot)
+- **Gitee 国内镜像**：[{仓库链接}](https://gitee.com/taohuiling2010/retail-financial-analysis-dashboard.git)
 
 如对项目有任何疑问或建议，欢迎通过 Issue 或邮件联系。
