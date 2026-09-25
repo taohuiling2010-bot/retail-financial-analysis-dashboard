@@ -4,7 +4,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?logo=mysql&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-DAX-F2C811?logo=powerbi&logoColor=black)
-![Date](https://img.shields.io/badge/Period-2025.11--2026.05-blue)
+![Date](https://img.shields.io/badge/Period-2026.02--2026.03-blue)
 ![Role](https://img.shields.io/badge/Role-Independent%20Owner-success)
 
 ---
@@ -122,9 +122,8 @@
 
 ## 📮 联系方式
 
-- **作者**：陶惠灵
-- **邮箱**：thlthl2010@yeah.net
-- **GitHub**：[@taohuiling2010-bot](https://github.com/taohuiling2010-bot)
-- **Gitee 国内镜像**：[{仓库链接}](https://gitee.com/taohuiling2010/retail-financial-analysis-dashboard.git)
+- **作者**：{你的姓名}
+- **邮箱**：{你的邮箱}
+- **GitHub**：[@{你的GitHub用户名}](https://github.com/{你的GitHub用户名})
 
 如对项目有任何疑问或建议，欢迎通过 Issue 或邮件联系。
