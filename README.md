@@ -121,6 +121,14 @@
 
 ---
 
+## 🌐 Project Summary (English)
+
+**Overview**: A five-page Power BI dashboard analyzing revenue quality and discount leakage for a simulated four-store, two-region retail chain, comparing August 2017 MTD against July 2017 MTD (30 days each). Six SQL scripts (CTEs, window functions, and LEFT JOIN coverage of zero-sales items) transform order-level POS data into thematic datasets, which Power BI models with a shared store dimension and 25+ DAX measures. The core framework decomposes revenue as list price → promotional discount → member discount → net revenue. The source data contains no cost fields, so the analysis covers the revenue side only; margin and profitability are out of scope.
+
+**Key Findings**: Net revenue reached RMB 3.31m (+1.8% MoM) at an overall discount rate of 4.77% (price realization 95.23%), split almost evenly between promotional (2.31%) and member (2.46%) discounts. Member orders carry a 5.86% discount rate, 2.14x that of non-members (2.73%), against an average ticket of RMB 60.52 vs. RMB 45.98. Members spend more, but they also get much bigger discounts, so whether member pricing pays for itself depends on program costs the data does not capture. A data-quality check found the POS system recording promotional coupons as zero-value sales lines, which had pushed a coupon to the top of the slow-mover ranking; these lines are filtered out at the product-dimension level before analysis. Category revenue is highly concentrated, with tobacco and alcohol forming the A-class core.
+
+---
+
 ## 📮 联系方式
 
 - **作者**:Huiling
