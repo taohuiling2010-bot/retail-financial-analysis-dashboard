@@ -30,8 +30,12 @@ sales_agg AS (
         COUNT(DISTINCT CASE WHEN a.dimDateID BETWEEN p.prev_start AND p.prev_end THEN a.salesNo END) AS 上期订单数
     FROM fct_sales_item a
     INNER JOIN dim_shop b ON a.dimShopID = b.dimShopID
+    INNER JOIN dim_goods g ON a.goodsID = g.dimGoodsID
     CROSS JOIN period_config p
-    WHERE a.dimDateID BETWEEN 20170701 AND 20170830
+    WHERE a.dimDateID BETWEEN p.prev_start AND p.curr_end
+    AND g.name NOT LIKE '%优惠券%'
+    AND g.name NOT LIKE '%赠券%'
+    AND g.name NOT LIKE '%代金券%'
     GROUP BY b.areaCode, b.areaName
 )
 SELECT
@@ -57,7 +61,6 @@ SELECT
     ROUND((订单数 - 上期订单数) / NULLIF(上期订单数, 0) * 100, 2) AS 订单数环比,
     -- 上期综合折扣率（对比折扣率是否在恶化）
     ROUND((上期促销折扣额 + 上期会员折扣额) / NULLIF(上期实际收入 + 上期促销折扣额 + 上期会员折扣额, 0) * 100, 2) AS 上期综合折扣率,
-    -- 在最外层 SELECT 末尾加上这几行
     上期促销折扣额,
     上期会员折扣额,
     上期实际收入 + 上期促销折扣额 + 上期会员折扣额 AS 上期吊牌总额,

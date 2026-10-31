@@ -3,6 +3,7 @@
 -- 分析周期：2017-08-01 ~ 2017-08-30
 -- 会员判定：fct_sales.dimMemberID > 0 = 会员订单，= 0 为非会员
 -- 输出：会员/非会员收入对比、客单价对比、会员细分（新/老）
+-- 已校验：dimMemberID无NULL
 -- ============================================================
 
 WITH order_level AS (
@@ -15,8 +16,9 @@ WITH order_level AS (
         CASE WHEN h.dimMemberID > 0 THEN '会员' ELSE '非会员' END AS 客户类型,
         CASE
             WHEN h.dimMemberID = 0 THEN NULL
-            WHEN m.firstShoppingDate IS NULL THEN '无首购记录'
-            WHEN CAST(m.firstShoppingDate AS UNSIGNED) BETWEEN 20170801 AND 20170830 THEN '新会员'
+            WHEN m.dimMemberID IS NULL THEN '会员档案缺失'
+            WHEN m.firstShoppingDate = 0 THEN '无首购记录'
+            WHEN m.firstShoppingDate BETWEEN 20170801 AND 20170830 THEN '新会员'
             ELSE '老会员'
         END AS 会员细分
     FROM fct_sales h
@@ -33,7 +35,11 @@ order_amount AS (
         -- 新增：每个订单的SKU数（不同商品数）
         COUNT(DISTINCT i.goodsID) AS 订单SKU数
     FROM fct_sales_item i
+    INNER JOIN dim_goods g ON i.goodsID = g.dimGoodsID
     WHERE i.dimDateID BETWEEN 20170801 AND 20170830
+    AND g.name NOT LIKE '%优惠券%'
+    AND g.name NOT LIKE '%赠券%'
+    AND g.name NOT LIKE '%代金券%'
     GROUP BY i.salesID
 )
 -- 主结果1：会员 vs 非会员总览

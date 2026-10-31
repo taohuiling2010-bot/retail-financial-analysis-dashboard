@@ -1,7 +1,8 @@
-============================================================
-SQL 3：门店当日 vs 昨日收入与折扣对比
-当日：2017-08-30  昨日：2017-08-29
-============================================================
+-- ============================================================
+-- SQL 3：门店当日 vs 昨日收入与折扣对比
+-- 当日：2017-08-30  昨日：2017-08-29
+-- 数据清洗：过滤"优惠券"等非销售商品记录
+-- ============================================================
 
 SELECT
     b.shopCode AS 门店编码,
@@ -29,7 +30,11 @@ SELECT
          - SUM(CASE WHEN a.dimDateID = 20170829 THEN a.AMT ELSE 0 END))
         / NULLIF(SUM(CASE WHEN a.dimDateID = 20170829 THEN a.AMT ELSE 0 END), 0) * 100, 2) AS 收入日环比
 FROM fct_sales_item a
-INNER JOIN dim_shop b ON a.dimShopID = b.dimShopID
+INNER JOIN dim_shop b  ON a.dimShopID = b.dimShopID
+INNER JOIN dim_goods g ON a.goodsID = g.dimGoodsID
 WHERE a.dimDateID IN (20170829, 20170830)
+  AND g.name NOT LIKE '%优惠券%'
+  AND g.name NOT LIKE '%赠券%'
+  AND g.name NOT LIKE '%代金券%'
 GROUP BY b.shopCode, b.name, b.areaCode, b.areaName
 ORDER BY 实际收入 DESC;

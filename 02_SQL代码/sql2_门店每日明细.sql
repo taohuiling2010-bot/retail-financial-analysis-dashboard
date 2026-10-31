@@ -2,6 +2,7 @@
 -- SQL 2：门店每日收入质量明细
 -- 分析周期：2017-08-01 ~ 2017-08-30
 -- 输出：每店每日收入、折扣构成、客单价
+-- 数据清洗：过滤"优惠券"等非销售商品记录
 -- ============================================================
 
 SELECT
@@ -23,8 +24,9 @@ SELECT
     h.订单数,
     ROUND(SUM(i.AMT) / NULLIF(h.订单数, 0), 2) AS 客单价
 FROM fct_sales_item i
-INNER JOIN dim_shop s ON i.dimShopID = s.dimShopID
-INNER JOIN dim_date c ON i.dimDateID = c.dimDateID
+INNER JOIN dim_shop s  ON i.dimShopID = s.dimShopID
+INNER JOIN dim_goods g ON i.goodsID = g.dimGoodsID
+INNER JOIN dim_date c  ON i.dimDateID = c.dimDateID
 INNER JOIN (
     -- 订单头表算订单数：一单一行，无需 DISTINCT
     SELECT dimShopID, dimDateID, COUNT(salesNo) AS 订单数
@@ -33,5 +35,8 @@ INNER JOIN (
     GROUP BY dimShopID, dimDateID
 ) h ON h.dimShopID = i.dimShopID AND h.dimDateID = i.dimDateID
 WHERE i.dimDateID BETWEEN 20170801 AND 20170830
+  AND g.name NOT LIKE '%优惠券%'
+  AND g.name NOT LIKE '%赠券%'
+  AND g.name NOT LIKE '%代金券%'
 GROUP BY c.dateName, c.dimDateID, s.shopCode, s.name, s.areaName, h.订单数
 ORDER BY c.dimDateID, 实际收入 DESC;
