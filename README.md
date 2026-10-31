@@ -43,9 +43,10 @@
 | 类别 | 发现 | 业务价值 |
 |---|---|---|
 | **数据治理** | POS 系统将营销优惠券("苏泊尔压力锅优惠券")记入销售明细,导致滞销榜单失真 | 通过商品维度过滤剥离非销售记录,避免运营基于错误数据决策 |
-| **会员经济性** | 会员综合折扣率 5.86% 是非会员(2.73%)的 **2.14 倍**,但客单价仅高出 ¥14.5 | 揭示会员体系"高购买力+高让利"双高现象,支撑会员折扣力度评估 |
+| **会员经济性** | 会员综合折扣率 5.86% 是非会员(2.73%)的 **2.14 倍**,客单价高出 ¥14.5 | 揭示会员体系"高购买力+高让利"双高现象,支撑会员折扣力度评估 |
 | **数据覆盖** | 全量校验门店×商品销售覆盖:4 家门店中东城店、上海店分析期内销售记录为零 | 门店对标限定于 2 家有效门店,避免空店拉低均值、扭曲对标结论 |
-| **品类结构** | 烟、酒两个品类贡献全公司 80%+ 收入(A类核心) | 验证品类经营高度集中,识别 ABC 资源配置优先级 |
+| **品类主数据** | 品类维度中同一编码对应多个名称,且名称与商品不符(如猫粮归入"酒") | 品类分析改按编码口径,不依据品类名称下结论 |
+| **品类结构** | 按编码口径共 40 个二级品类:前 15 个贡献 78.8% 收入(A 类);4 个品类综合折扣率比整体(4.77%)高出 5 个百分点以上,其中 3 个属于一级品类 80 | 识别 ABC 资源配置优先级,定位需复核促销政策的高折扣依赖品类 |
 
 ---
 
@@ -66,7 +67,7 @@
 
 - **README.md** — 本文件,项目门面
 - **01_项目说明文档.md** — 项目详细文档(业务背景/分析框架/指标体系)
-- **02_SQL代码/** — 6 段主题分析 SQL + 1 段数据覆盖校验 SQL
+- **02_SQL代码/** — 6 段主题分析 SQL + 1 段数据覆盖校验 SQL(7 段统一剔除券类记录)
   - sql1_大区收入质量分析.sql
   - sql2_门店每日明细.sql
   - sql3_门店日报对比.sql
@@ -125,9 +126,9 @@
 
 ## 🌐 Project Summary (English)
 
-**Overview**: A five-page Power BI dashboard analyzing revenue quality and discount leakage for a simulated four-store, two-region retail chain, comparing August 2017 MTD against July 2017 MTD (30 days each). Six SQL scripts (CTEs, window functions, and LEFT JOIN coverage of zero-sales items) transform order-level POS data into thematic datasets, which Power BI models with a shared store dimension and 25+ DAX measures. The core framework decomposes revenue as list price → promotional discount → member discount → net revenue. The source data contains no cost fields, so the analysis covers the revenue side only; margin and profitability are out of scope.
+**Overview**: A five-page Power BI dashboard analyzing revenue quality and discount leakage for a simulated four-store, two-region retail chain, comparing August 2017 MTD against July 2017 MTD (30 days each). Seven SQL scripts (six thematic queries plus a store × SKU coverage check, using CTEs, window functions and LEFT JOIN anti-joins) transform order-level POS data into thematic datasets, which Power BI models with a shared store dimension and 25+ DAX measures. The core framework decomposes revenue as list price → promotional discount → member discount → net revenue. The source data contains no cost fields, so the analysis covers the revenue side only; margin and profitability are out of scope.
 
-**Key Findings**: Net revenue reached RMB 3.31m (+1.8% MoM) at an overall discount rate of 4.77% (price realization 95.23%), split almost evenly between promotional (2.31%) and member (2.46%) discounts. Member orders carry a 5.86% discount rate, 2.14x that of non-members (2.73%), against an average ticket of RMB 60.52 vs. RMB 45.98. Members spend more, but they also get much bigger discounts, so whether member pricing pays for itself depends on program costs the data does not capture. A data-quality check found the POS system recording promotional coupons as zero-value sales lines, which had pushed a coupon to the top of the slow-mover ranking; these lines are filtered out at the product-dimension level before analysis. A full store × SKU coverage check further showed that two of the four stores recorded no sales during the period, so store benchmarking covers the two active stores only. Category revenue is highly concentrated, with tobacco and alcohol forming the A-class core.
+**Key Findings**: Net revenue reached RMB 3.31m (+1.8% MoM) at an overall discount rate of 4.77% (price realization 95.23%), split almost evenly between promotional (2.31%) and member (2.46%) discounts. Member orders carry a 5.86% discount rate, 2.14x that of non-members (2.73%), against an average ticket of RMB 60.52 vs. RMB 45.98. Members spend more, but they also get much bigger discounts, so whether member pricing pays for itself depends on program costs the data does not capture. A data-quality check found the POS system recording promotional coupons as zero-value sales lines, which had pushed a coupon to the top of the slow-mover ranking; these lines are filtered out at the product-dimension level before analysis. A full store × SKU coverage check further showed that two of the four stores recorded no sales during the period, so store benchmarking covers the two active stores only. Category names in the source data were inconsistent (one category code mapped to several names, and names did not match the products), so category analysis uses category codes: 15 of 40 sub-categories generate 78.8% of revenue (A-class), and four sub-categories run discount rates more than 5 percentage points above the 4.77% average.
 
 ---
 
